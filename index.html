@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2016 by Ben Lewis
+Changes:
+  * Added Note 8 and iPhone X
+-->
+<html>
+<head>
+  <!--link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css"-->
+  <link rel="stylesheet" href="w3CSS.css">
+<meta name="description" content="How to measure spaghetti?  Pastamizer can help you automatically measure spaghetti and other pasta such as angel hair, linguini and fettuccine.">
+<meta name="keywords" content="spaghetti measuring, spaghetti measure, how to measure spaghetti, pasta measuring, pasta measure, how to measure pasta, pasta measuring app, spaghetting measuring app, spaghetti, measure, angle hair, spagheti, linguini, fettuccine, vermachelli, vermicelli">
+  <meta charset="utf-8">
+  <!--meta name="viewport" content="width=device-width"> -->
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width"> <!-- ADDED initial scale and not user scalable to try to fix iPhone 5 and Safari resizing issue-->
+  <title>How to measure spaghetti?  The Pastamizer will optimize your pasta measuring</title>
+<style>
+
+/* Hamburger Menu */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.hamburger {
+    position: absolute;
+    top: 2px; 
+    left: 2px;
+    z-index: 1;
+}
+
+
+/* Social buttons */
+.socialButton {
+    position: fixed;
+    top: 2px; 
+    right: 2px;
+    z-index: 1;
+}
+
+/* table of drop dows */
+th, td {
+    padding: 2px;
+}
+
+/*drop down boxes */
+.dropDown {
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
+  background-color:#3498DB;
+  background-repeat:no-repeat;
+  background-position: right 5px top 8px;
+  background-size: 12px 12px;
+  color:white;
+  padding:8px;
+  width:150px;
+  /* font-family:arial,tahoma;
+  font-size:16px;
+  font-weight:bold;
+  */
+  color:#fff;
+  text-align:center;
+  text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
+  border-radius:3px;
+  -webkit-border-radius:3px;
+  -webkit-appearance: none;
+  border:0;
+  outline:0;
+  -webkit-transition:0.3s ease all;
+     -moz-transition:0.3s ease all;
+      -ms-transition:0.3s ease all;
+       -o-transition:0.3s ease all;
+          transition:0.3s ease all;
+}
+
+#numPeopleSelect {
+  background-color:#2980B9;
+}
+
+#numPeopleSelect:hover {
+  background-color:#154360;
+}
+
+#pastaType {
+  background-color:#2471A3;
+}
+
+#pastaType:hover {
+  background-color:#154360;
+}
+
+#mealType {
+  background-color:#1F618D;
+}
+
+#mealType:hover {
+  background-color:#154360;
+}
+
+#numKids {
+  background-color:#1A5276;
+}
+
+#numKids:hover {
+  background-color:#154360;
+}
+
+#hungerLevel {
+  background-color:#154360;
+}
+
+#hungerLevel:hover {
+  background-color:#154360;
+}
+
+
+select:focus, select:active {
+  border:0;
+  outline:0;
+}
+
+/* create a CSS style that makes things disappear - this may fix iPhone Safari issues */
+.disappear {
+     display: none;
+}
+
+
+</style>
+
+</head>
+<body class="w3-container">
+
+  <!-- run the WURFL to try and identify device type-->
+  <script type="text/javascript" src="https://wurfl.io/wurfl.js"></script>
+
+  <!-- Facebook
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+-->
+<!-- the menu -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a style="cursor:pointer"  onclick="document.getElementById('aboutModal').style.display='block';closeNav()">About</a>
+  <a style="cursor:pointer"  onclick="document.getElementById('recipeModal').style.display='block';closeNav()">~5 Minute Sauce Recipes</a>
+  <a style="cursor:pointer"  onclick="document.getElementById('settingsModal').style.display='block';closeNav()">Settings</a>
+  <a href="javascript:startCalibration(true);">Recalibrate</a>
+  <a style="cursor:pointer"  onclick="document.getElementById('helpModal').style.display='block';closeNav()">Help</a>
+
+</div>  
+<span class="hamburger" style="font-size:30px;cursor:pointer;" onclick="openNav()">&#9776;</span>  
+  
+  
+<!-- the logo -->  
+<div class="w3-display-container w3-text-white w3-center">
+<!--  <img src="http://eatdangerously.com/programming_files/pastamizer_logo.png" alt="Pastamizer - The Pasta Optimizer!" style="width:50%;max-width:400px">
+-->
+    <img src="pastamizer_logo2.png" alt="Pastamizer - The Pasta Optimizer!" style="width:50%;max-width:110px">
+</div>
+
+<!-- social share -->
+    <!-- div class="w3-display-topright" -->
+    <div class="socialButton">
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.pastamizer.com%2F&amp;src=sdkpreparse"><img src="facebook.gif" alt="post to facebook" hspace="1"></a> 
+      <a href="https://twitter.com/intent/tweet?text=optimizing+my+pasta+measuring+at&url=http%3A%2F%2Fpastamizer.com%2F"><img src="twitter.gif" alt="tweet" hspace="1"></a>
+</div>  <!-- end of social share -->
+  
+<!-- the main content -->
+
+<div class="w3-row">
+<div class="w3-twothird">
+
+<h4>Wondering how to measure pasta?  Optimize with Pastamizer!</h4>
+  <p id="test"></p>
+  <p id="subtitle">Save $0.10's of cents!  The Pastamizer is the amazing app that helps you make the exact amount of pasta without any waste.</p>
+  
+<p id=first_section ></p>
+
+
+ <a id="inchTips" style="cursor:pointer"  onclick="document.getElementById('inchModal').style.display='block';closeNav()">[???]</a>
+<div id="inchModal" class="w3-modal">
+  <div class="w3-modal-content">
+        <header class="w3-container w3-amber">
+      <span onclick="document.getElementById('inchModal').style.display='none'" 
+      class="w3-closebtn">&times;</span>
+              <h3>Nonstandard measurement ideas</h3>
+    </header>
+     <div class="w3-container">
+<p><ul><li>Fold a $1 bill in half longways (1.25")</li><li>Fold a standard piece of paper in half longways 3X (1.05")</li><li>4 chopsticks at their widest (~1")</li><li>4 #2 pencils (1.25")</li><li>Use the bottom of a stick of butter (1.25")</li><li>If not using a touchscreen - a quarter (0.955").  Curious what happens if you put a quarter on a touchscreen?  Try it and watch it go wacky since the coin's conductive metal will mess up the screen's sensors</li></ul></p>
+    </div>
+  </div>
+</div>  
+  
+  <div id="selectingTime">
+ <table> 
+  <tr>
+    <td><form>Number of People</td>
+    <td><select id="numPeopleSelect" class="dropDown">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+    </select></td>
+  </tr>
+  <tr>
+    <td>Pasta Type</td>
+    <td><select id="pastaType" class="dropDown">
+      <option>Spaghetti</option>
+      <option>Angel Hair</option>
+      <option>Linguini</option>
+      <option>Fettuccine</option>
+  </select></td></tr>
+ 
+  <tr>
+    <td>Course</td>
+    <td><select id="mealType" class="dropDown">
+      <option>Main Course</option>
+      <option>Side Dish</option>
+  </select></td></tr>
+
+  <tr>
+    <td>Kids?</td>
+    <td><select id="numKids" class="dropDown">
+      <option>No kids</option>
+      <option>1 kid</option>
+      <option>2 kids</option>
+      <option>3 kids</option>
+      <option>4 kids</option>
+      <option>5 kids</option>
+      <option>6 kids</option>
+      </select></td>
+      <td><p id="kidsError" class="w3-red w3-padding-0"></p></td></tr>
+
+  <tr>
+    <td>Hunger Level:
+
+         <a style="cursor:pointer"  onclick="document.getElementById('hungerModal').style.display='block';closeNav()">[?]</a>
+        <div id="hungerModal" class="w3-modal">
+          <div class="w3-modal-content">
+                <header class="w3-container w3-amber">
+              <span onclick="document.getElementById('hungerModal').style.display='none'" 
+              class="w3-closebtn">&times;</span>
+                      <h3>How Hungry Are You?</h3>
+            </header>
+             <div class="w3-container">
+        <p> <ul><li>Just finished an ultra marathon?  Pick <i>Starving</i> for 60% more!</li><li> Rode your bicycle 10 miles?  Choose <i>Very Hungry</i> for 30% more!</li><li> Want to save room for dessert?  Select <i>Room For Dessert</i> for 20% less!</li><li> Ate a huge breakfast?  Click <i>Not So Much</i> for 40% less! </li></ul> </p>
+            </div>
+          </div>
+        </div>  
+    </td>
+    <td><select id="hungerLevel" class="dropDown">
+        <option>Not So Much</option>
+        <option>Room For Dessert</option>
+        <option selected>Normal</option>
+        <option>Very Hungry</option>
+        <option>Starving</option>
+    </select></td></tr>      
+
+</table>
+    
+<br><input type="button" onclick="getPeopleNum()" value="Measure the Pasta!" class="w3-btn w3-large w3-yellow">
+</form>
+  </div>
+  
+<div id=calibrate>
+    <input type="button" onclick="startCalibration()" value="Get started!" class="w3-btn w3-yellow">
+  </div> <! end of start calibration>
+  
+<div id=calibrate_buttons>
+  <input type="button" onclick="growLine()" value="+" class="w3-btn">
+    <input type="button" onclick="shrinkLine()" value="-" class="w3-btn">
+      <input type="button" onclick="saveCalibration()" value="Save" class="w3-btn">
+  </div> <! end of calibrate buttons>
+
+
+<canvas id="myCanvas" width="300" height="5"> Your browser does not support the HTML5 canvas tag.</canvas>
+
+  <br>
+  <p id="pixelCounter"></p>
+  <p id="test2"></p>
+
+<!--google play badge
+
+<a href='https://play.google.com/store/apps/details?id=com.procrastinate.pastamizer&hl=en_US&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img class="w3-display-bottommiddle"  style="width:20%"  alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
+-->
+
+<!-- end of the w3-twothird -->
+</div>
+
+<!-- start and end w3-onethird for responsive ads and column wrap on mobile -->
+<div class="w3-third w3-padding-medium">
+<br><br>
+<!-- remove google adsense  REMOVE FOR ANDROID APP START
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3137925263133183"
+         data-ad-slot="7790336528"
+         data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>  
+REMOVE FOR ANDROID APP END -->
+</div>
+
+<!-- end of w3-row-->
+</div> 
+
+<!-- About -->
+<div id="aboutModal" class="w3-modal">
+  <div class="w3-modal-content">
+    <header class="w3-container w3-amber">
+      <span onclick="document.getElementById('aboutModal').style.display='none'" 
+      class="w3-closebtn">&times;</span>
+              <h3>About</h3>
+    </header>
+     <div class="w3-container">
+<p>Pastamizer optimizes how you measure spaghetti.  Ever wrapped your hand around a bunch of uncooked spaghetti and wondered “Am I making too much?” or “Is this enough?”  Now you can take that bunch in your hand and plop it on top of the circle that Pastamizer automatically creates for you, based on exactly what you need.  First select the number of people, the type of pasta (e.g. spaghetti, angel hair, etc.) your hunger level, and--presto! the Pastamizer algorithm does all the work.  All you need to do after is fill in the perfectly optimized circle with a bunch of pasta.  There are many advantages:</p><ul><li><b>Accurate to the spaghetto!</b> Pastamizer measures the exact amount of pasta accurate to the spaghetto (an individual strand of spaghetti)</li><li><b>Saves you TENS of CENTS!!</b>  No more strands, or piles, of unneeded pasta stuck to your colander.  The typical person throws out about 5-10% of pasta after cooking.  That is about 7 to 14 cents per box of pasta given the average US price per pasta at $1.45/pound 
+</li><li><b>Decreases landfill waste and carbon footprint!</b>  Pastamizer could save an estimated 90,000 to 180,000 tons of landfill material annually given worldwide pasta consumption is about 6 billion pounds of dried pasta per year, of which 60% is long pasta such as spaghetti/angel hair/fettuccine.  Carbon footprint reduction is even more dramatic considering not just food waste decomposition gases, but also agricultural energy/water/fertilizer, transportation energy and packaging material manufacturing</li><li>Source of pasta facts &amp; figures: <a href="http://www.ilovepasta.org/"  target="_blank" >the National Pasta Association</a></li></ul><p>Pastamizer’s software includes sophisticated algorithms and experimental evidence to measure the exact amount of pasta including:</p><ul><li>Smart calculations depending on the type of long pasta (e.g. spaghetti vs. angel hair vs. fettuccine) that accounts for packing density variation</li>
+<li>Experimental measurements of pasta surface density of different pasta types accurate to 0.1 gram and 0.4 millimeters</li>
+<li>Equations that draw the exact circumference of a cylinder of pasta accurate to a single pixel utilizing pi to 15 decimal places</li></ul><p>Pastamizer is optimized for different devices.  Every model of smartphone/tablet/desktop monitor has a different screen width and resolution.  Pastamizer solved this non-trivial problem:</p><ul><li>For popular smartphones/tablets, the software automatically identifies the device’s specifications ensuring that the pasta circle sizes are accurate</li>
+<li>For unknown devices and desktop monitors, the software supports manual calibration accurate to a single pixel
+</li></ul><p>You won’t go hungry when using Pastamizer:
+</p><ul><li>The portion size is set to a realistic 114 grams (4 ounces) – what a typical person would eat as a main course - not an unrealistic government mandated “serving size” which is only 2 ounces, or half the amount a normal person would consider a proper amount of pasta</li><li>
+The software includes a hunger adjustment factor so you can increase the portion size depending on your hunger level
+The software also includes an adjustment factor for kid sized portions</li><li>
+I’ve also written some 5 minute sauce recipes you can make quickly while your pasta is boiling</li><li>
+<b>Suitable for Pastafarians!</b>  Can be used for Church of the Flying Spaghetti Monster rituals and holidays</li></ul><p>In summary, I think I thought of every possible way to optimize measuring long pasta.  If you think I missed something, or want to share feedback, just email me your comments at <a href="mailto:pastafarian@pastamizer.com">pastafarian@pastamizer.com</a></p>
+<p style="font-size:xx-small"><a href="https://commons.wikimedia.org/wiki/File:FSM_Logo.svg#/media/File:FSM_Logo.svg"><img src="https://upload.wikimedia.org/wikipedia/commons/7/76/FSM_Logo.svg" alt="Drawing of the Flying Spaghetti Monster; crudely drawn with thick lines. Image shows a plain oval for the body, six noodles for the arms and two eye stalks." height="145" width="218"></a><br>FSM logo above by Trace run by <a href="//commons.wikimedia.org/wiki/User:INVERTED" title="User:INVERTED">INVERTED</a>, original image created by <a href="//commons.wikimedia.org/wiki/User:Lawrencekhoo" title="User:Lawrencekhoo">Lawrencekhoo</a> - See above., Public Domain, <a href="https://commons.wikimedia.org/w/index.php?curid=7307229">https://commons.wikimedia.org/w/index.php?curid=7307229</a></p>
+    </div>
+  </div>
+</div>
+  
+<!-- Recipes -->
+<div id="recipeModal" class="w3-modal">
+  <div class="w3-modal-content">
+        <header class="w3-container w3-amber">
+      <span onclick="document.getElementById('recipeModal').style.display='none'" 
+      class="w3-closebtn">&times;</span>
+              <h3>~5 Minute Sauce Recipes</h3>
+    </header>
+     <div class="w3-container">
+<p>Below are five ~5 minute sauce recipes to prepare while your pasta is cooking.  I’ve tested each of these recipes dozens of times and I hope you enjoy them as much as I do.  Want to share your ~5 minute sauce recipe?  Email me a link at <a href="mailto:pastafarian@pastamizer.com">pastafarian@pastamizer.com</a></p>
+
+
+      <p><b>#1: Rosemary Lemon - this will become your new signature dish!</b></p>
+      </i>Ingredients per serving:</i>
+  <ul><li>1 tablespoon of fresh rosemary, ideally from your window box, minced</li>
+    <li>1 clove of garlic, mashed into a pulp</li>
+    <li>Zest of ½ of a lemon</li>
+    <li>1 tablespoon of Pecorino Romano cheese, grated</li>
+    <li>1 tablespoon of extra virgin olive oil</li>
+    <li>Salt and Pepper</li></ul>
+
+  <i>Instructions:</i>
+  <p>Mince your rosemary finely.  Mash your garlic by chopping, add salt, and then mash with the flat part of a knife until nearly liquified.  Zest the lemon with a grater.  Mix the rosemary, garlic, lemon zest and pepper in the olive oil.  Mix all with the cooked pasta including the grated cheese.  😎🙌!</p>
+
+  <p><b>#2: Prosciutto di Parma and Spinach  - once you know how to make this it is like being a member of an exclusive club !</b></p>
+<i>Ingredients per person:</i>
+<ul><li>3 or 4 thin slices of Prosciutto di Parma, cut into little strips</li>
+  <li>1 tablespoon of butter</li>
+  <li>1/4 cup of Parmigiano-Reggiano cheese, grated</li>
+  <li>1 cup of tightly packed spinach</li>
+  <li>Salt and pepper</li></ul>
+
+  <i>Instructions:</i>
+<p>Cut the prosciutto into thin strips.  Once the pasta is cooked, add the butter to the empty pot and, on medium-high heat, fry up the prosciutto for a minute or two.  Turn off the heat and add the spinach along with the cooked pasta.  Mix thoroughly until the spinach is wilted.  Add the cheese, salt and pepper, and mix again.  Q.E.D.!</p>
+
+  <p><b>#3: Caprese - for tomato lovers!</b></p>
+  <i>Ingredients per person:</i>
+  <ul><li>1 heirloom tomato, ideally from your garden or greenmarket</li>
+  <li>2 tablespoons of fresh basil, washed well and roughly chopped</li>
+  <li>2 ounces of fresh mozzarella (about 1/4 of a ball)</li>
+  <li>1 tablespoon of extra virgin olive oil</li>
+  <li>Salt and pepper</li></ul>
+  <i>Instructions:</i>
+  <p>Peel the tomatoes by boiling them in the boiling pasta water for 1 minute. Remove and dunk them in an ice bath to cool them down; then peel the skins.  Next, slice the tomatoes in half and remove the seeds. Chop the tomatoes into ¼-inch pieces.  Chop the mozzarella into ¼-inch pieces.  Mix tomatoes, mozzarella, basil, olive oil, and salt and pepper with the cooked pasta.  TADA!</p>
+
+  <p><b>#4: Spicy Garlic and Herbs - everything you need is probably already in your pantry!</b></p>
+  <i>Ingredients per person:</i>
+  <ul><li>1 clove of garlic, sliced thin</li>
+  <li>1 tablespoon of olive oil</li>
+  <li>Pinch of hot red pepper flakes or cayenne powder</li>
+  <li>1 teaspoon of dried herbs (Italian, French, Oregano, or nearly anything green will do)</li>
+  <li>Salt</li></ul>
+  <i>Instructions:</i>
+  <p>Slice your garlic as thinly as you can.  Once the pasta is cooked, add the olive oil to the empty pot and on medium heat, fry up the garlic until golden brown.  Remove the pot from the heat and add the hot pepper, herbs, salt and cooked pasta.  Mix well.  Mission accomplished!</p>
+
+  <p><b>#5: Pesto - fast, cheap and always satisfying!</b></p>
+  <i>Ingredients per person:</i>
+  <ul><li>1/2 cup of slightly packed fresh basil leaves, washed well</li>
+  <li>1 clove of garlic</li>
+  <li>1 tablespoon of water</li>
+  <li>1 tablespoon of pine nuts or slivered almonds (note: I recommend almonds because pine nuts often have unpredictable quality)</li>
+  <li>1 tablespoon of Parmigiano-Reggiano cheese, roughly chopped or grated</li>
+  <li>1 tablespoon of extra virgin olive oil</li>
+  <li>Salt and pepper to taste</li></ul>
+  <i>Instructions:</i>
+  <p>Using a blender or food processor, combine the garlic, water and nuts until smooth.  Add the basil and olive oil and grind until smooth, adding a bit more water if necessary.  Add the cheese, salt and pepper, and grind again.  Combine with the pasta.  Done!!!1!</p>
+
+
+
+  
+
+ 
+    </div>
+  </div>
+</div>  
+
+<!-- Settings -->
+<div id="settingsModal" class="w3-modal">
+  <div class="w3-modal-content">
+        <header class="w3-container w3-amber">
+      <span onclick="document.getElementById('settingsModal').style.display='none'" 
+      class="w3-closebtn">&times;</span>
+              <h3>Settings</h3>
+    </header>
+     <div class="w3-container">
+     <p><b>Serving Size:</b></p>
+     <input type="number" min="1" max="300" size="3" value="114" oninput="calcOunces()" id="settingsServing"> grams
+     (which is <span id="servingSizeOunces"></span> ounces)
+      <input type="button" id="servingsSaveButton" onclick="saveServingSize()" value="Save" class="w3-btn">
+      <p id="settingsError" class="w3-red"></p>
+     <br>
+     <p><b>Kid's Portion Size as Percent of an Adult:</b></p>
+      <input type="number" min="1" max="100" size="2" value="75" id="settingsKids">%
+      <input type="button" id="kidsSaveButton" onclick="kidsServingSize()" value="Save" class="w3-btn">
+      <p id="kidsSettingsError" class="w3-red"></p>     
+
+
+     <br>
+    </div>
+  </div>
+</div>  
+
+<!-- Help -->
+<div id="helpModal" class="w3-modal">
+  <div class="w3-modal-content">
+        <header class="w3-container w3-amber">
+      <span onclick="document.getElementById('helpModal').style.display='none'" 
+      class="w3-closebtn">&times;</span>
+              <h3>Help</h3>
+    </header>
+     <div class="w3-container">
+     <p><b>If the pastamizer isn't working perfectly, try the following ideas:</b></p>
+      <ul>
+        <li>Make sure you're not zooming</li>
+        <li>Use Google Chrome</li>
+        <li>Try clicking the "Recalibrate" menu option a few times</li>
+        <li>Change the serving size in the settings</li>
+        <li>Send me an email <a href="mailto:pastafarian@pastamizer.com">pastafarian@pastamizer.com</a> describing your issue</li>
+      </ul>
+      <br>
+    </div>
+  </div>
+</div>  
+  
+<script id="javascript">
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+var canvas = document.getElementById("myCanvas");
+var page = 1;  //page 2 is used to redraw circle after serving size is changed
+var deviceKnown = "unknown";
+var formFactor = WURFL.form_factor; 
+var completeDeviceName =  WURFL.complete_device_name;
+var pixelsPerInch = 147; //average of all known devices
+var deviceSimp = ""; //abridged name simplified
+var servingSize = 114; //in grams assuming 4 ounces per person - a 1 lb box feeds 4 people
+var servingSizeOunces = Math.round( (servingSize/28.3495)*10 )/10;
+    document.getElementById("servingSizeOunces").innerHTML = servingSizeOunces; //ensure the settings page displays the correct value
+var servingSizeTemp = 114;
+var pastaSurfaceDensity = 185; // grams per square inches of pasta, 173 is spaghetti
+var numKids = 0; //initialize
+var kidsPct = 0.75; 
+var pastaSurfaceDensityDB = {
+  Spaghetti: 185,
+  "Angel Hair": 192,
+  Linguini: 190,
+  Fettuccine: 171
+}
+var numKidsDB = {
+  "No kids": 0,
+  "1 kid": 1,
+  "2 kids": 2,
+  "3 kids": 3,
+  "4 kids": 4,
+  "5 kids": 5,  
+  "6 kids": 6  
+}
+var hungerLevelDB = {
+  "Not So Much": 0.6,
+  "Room For Dessert": 0.8,
+  "Normal": 1.0,
+  "Very Hungry": 1.3,
+  "Starving": 1.6
+}
+var deviceDB = {
+  "V10": 127,
+  "G5": 140,
+  "G6": 141,
+  "G3": 135,
+  "G4": 135,
+  "Xperia 1": 161,
+  "Xperia 10": 152,
+  "Xperia 5": 150,
+  "Xperia Z5": 143,
+  "Xperia Z2": 141,
+  "Xperia Z3": 141,
+  "Xperia X": 147,
+  "Honor 9X": 130,
+  "Honor 8X": 132,
+  "Honor 7X": 136,
+  "P10 Plus": 135,
+  "HTC U": 134,
+  "K8": 147,
+  "Huawei": 132,
+  "Note 3": 129,
+  "Note III": 129,
+  "Note 2": 134,
+  "Note II": 134,
+  "Note 4": 129,
+  "Note IV": 129,
+  "Note 7": 132,
+  "Note8": 151,
+  "Note 8": 151,
+  "Note9": 147,
+  "Note 9": 147,
+  "Note10": 153,
+  "Note 10": 153,
+  "Note10+": 149,
+  "Note 10+": 149,
+  "Galaxy S2": 145,
+  "Galaxy SII": 145,
+  "Galaxy S3": 153,
+  "Galaxy SIII": 153,
+  "Galaxy S4": 147,
+  "Galaxy SIV": 147,
+  "Galaxy S5": 147,
+  "Galaxy S6": 145,
+  "Galaxy S7": 145,
+  "Galaxy S7 Edge": 137,
+  "Galaxy Tab S2 9.7": 134,
+  "Galaxy Tab 3": 149,
+  "Galaxy Tab E 8": 144,
+  "Galaxy Nexus": 159,
+  "Galaxy S9": 146,
+  "Galaxy S9+": 138,
+  "Galaxy S10": 138,
+  "Nokia 9": 179,
+  "iPhone": 153,
+  "iPhone 3": 163,
+  "iPhone 4": 163,
+  "iPhone 5": 163,
+  "iPhone 6": 163,
+  "iPhone 6 Plus": 134,
+  "iPhone 6+": 134,
+  "iPhone 6S": 152,
+  "iPhone 6S Plus": 152,
+  "iPhone 7": 163,
+  "iPhone 7 Plus": 157,
+  "iPhone X": 153,
+  "iPhone XS Max": 153,
+  "iPhone XR": 163,
+  "iPhone 8": 163,
+  "iPhone 8 Plus": 153,
+  "iPhone 11": 162,
+  "iPhone 11 Pro": 153,
+  "iPhone SE": 164,
+  "iPad": 132,
+  "iPad 1": 132,
+  "iPad 2": 132,
+  "iPad 3": 132,
+  "iPad 4": 133,
+  "iPad Pro": 133,
+  "iPad Pro 9.7": 133,
+  "iPad mini": 163,
+  "iPad mini 4": 163,
+  "iPad Air": 132,
+  "Air 2": 133,
+  "Pixel 2": 154, 
+  "Pixel 3": 169,
+  "Pixel 3 XL": 149,
+  "Pixel 3a": 153,
+  "Pixel 3a XL": 153,
+  "Pixel 4": 169,  
+  "Pixel 4 XL": 153, 
+  "Kindle Fire HD 6": 168,
+  "Kindle Fire HDX 7": 160,
+  "Kindle Fire HD 7": 144,
+  "Kindle Fire HD 8": 142,
+  "Kindle Fire HD 10": 149,
+  "Kindle Fire HD 8.9": 170,
+  "Kindle Fire HDX 8.9": 170,
+  "Paperwhite": 160,
+  "Nexus 4": 159,
+  "Nexus 5": 148,  
+  "Nexus 6": 141,
+  "Nexus 7": 162,
+  "Nexus 10": 150,
+  "Nexus S": 155,
+  "Droid 3": 184,
+  "Droid 4": 184,
+  "Droid Turbo 2": 136,
+  "Moto Z Droid": 134,
+  "Surface": 148,
+  "Surface Pro": 138,
+  "Surface Pro 2": 138,
+  "Surface Pro 3": 144,
+  "OnePlus 7T Pro": 147,
+  "OnePlus 7T": 153,
+  "OnePlus 7 Pro": 147,
+  "OnePlus 7": 153,   
+  "Mate 20 Pro": 135,   
+  "Mate 20 Lite": 136,
+  "K61": 131,
+  "G8X": 134,
+  "Xiaomi Mi 10": 140,
+  "Xiaomi Mi 9": 147,
+  "One": 156,
+  "HTC One": 156,
+  "One M9": 147,
+  "HTC6545": 142
+};
+
+ //if canvas width is larger than window because the # of servings is larger than the screen can fit, fix it to be the window.innerwidth so that the browser doesn't zoom out and mess up the scaling.  subtract a 20 pixels for mysterious reasons
+  //figure out current width
+  var currentWidth = window.innerWidth;
+
+
+<!--REMOVE FOR ANDROID APP START -->
+//Google Analytics for saving custom pixel densities
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-85138440-1', 'auto');
+        ga('send', 'pageview');
+<!--REMOVE FOR ANDROID APP END -->
+
+
+//figure out if device is known
+
+if (formFactor != "Desktop")
+  {
+    //interate through the properties in the object to find a match, simplify the name, set device as known and set pixels per inch to value
+    for (var prop in deviceDB) {
+     if(completeDeviceName.includes(prop)){
+      deviceSimp = prop;
+      deviceKnown = "known";  
+      pixelsPerInch = deviceDB[prop];
+      } 
+    }
+  } //end of processing known devices
+
+//document.getElementById("test2").innerHTML = "DEBUG --> you're running this on " +  completeDeviceName + " simplified as " + deviceSimp;
+
+/*hide various items until they're needed - previous way that didn't work well on iPhones
+document.getElementById("calibrate_buttons").style.display = "none";
+document.getElementById("inchTips").style.display = "none";
+document.getElementById("selectingTime").style.display = "none";
+document.getElementById("pixelCounter").style.display = "none";
+*/
+
+//hide various items until they're needed by changing CSS - NOTE THIS IS A NEW APPROACH AS OF Feb 12, 2017 to try to fix bug in iPhones
+document.getElementById("calibrate_buttons").setAttribute("class", "disappear");
+document.getElementById("inchTips").setAttribute("class", "disappear");
+document.getElementById("selectingTime").setAttribute("class", "disappear");
+document.getElementById("pixelCounter").setAttribute("class", "disappear");
+
+
+
+//figure out if user has saved a custom serving size
+if ( localStorage.getItem("savedServingSize")  !== null){
+  servingSize = localStorage.getItem("savedServingSize");
+  document.getElementById("settingsServing").value = servingSize;
+}
+
+//figure out if user has saved a custom kids percentage
+if ( localStorage.getItem("savedKidsServingSize")  !== null){
+  kidsPct = localStorage.getItem("savedKidsServingSize");
+  document.getElementById("settingsKids").value = kidsPct * 100;
+}
+
+
+if (page==1 & localStorage.getItem("savedPixelsPerInch")== null){
+ document.getElementById("first_section").innerHTML="The Pastamizer works best on popular phones/tablets.  But, if you're trying it on a computer, or if your device type is unrecognized, we need to calibrate your screen so that the Pastamizer is super accurate.  Click the 'Get Started' button and I'll try to figure out what type of device you're using.";
+}
+
+//if the HTML link is clicked sending a "true" to the function, clear out the local storage and force a server reload
+
+function startCalibration(again) {
+   //recalibrate
+   if (again){
+     localStorage.clear();
+    location.reload(true);        
+    }
+  
+   //check if user has already saved calibration
+   if(localStorage.getItem("savedPixelsPerInch") !== null)
+    {
+      pixelsPerInch = localStorage.getItem("savedPixelsPerInch");         document.getElementById("first_section").style.display = "block";           document.getElementById("first_section").innerHTML="Welcome back!  If you need to, recalibrate by clicking the link at the bottom of the page.";
+      deviceKnown = "known";
+  saveCalibration();
+    }
+  
+  if (deviceKnown == "known"){
+     localStorage.setItem("savedPixelsPerInch", pixelsPerInch);
+     document.getElementById("first_section").innerHTML="Great!  You have a known device: " + deviceSimp + " with " + pixelsPerInch + " pixes per inch";
+     document.getElementById("calibrate").style.display = "none";    //hide the button that starts the calibration
+     //document.getElementById("test2").innerHTML = pixelsPerInch;
+     setTimeout(selectServings, 2000); //2 second delay to display message that device is known
+   }
+  
+
+  if (deviceKnown=="unknown"){
+    document.getElementById("first_section").innerHTML="Check the line below.  It needs to be 1 inch long.  Use the buttons to grow and shrink the line until you're certain it is 1 inch.  Don't have a ruler handy?  Click the [???] below for some ideas.";
+        document.getElementById("inchTips").style.display = "inline-block";
+        document.getElementById("calibrate").style.visibility = "hidden"; //hide the button that starts the calibration
+        document.getElementById("calibrate_buttons").style.display = "block"; //show the calibration buttons
+  document.getElementById("pixelCounter").style.display = "block"; //show pixel counter 
+
+        ctx.strokeStyle = "Orange";
+        ctx.lineWidth = 5;
+        ctx.moveTo(0,0);
+        ctx.lineTo(pixelsPerInch,0);
+        ctx.stroke();  
+  
+   } //end if for unknown devices
+  
+} //end startCalibration function
+
+function growLine(){
+  pixelsPerInch += 1;
+  ctx.strokeStyle = "Orange";
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.lineTo(pixelsPerInch,0);
+  ctx.stroke();  
+  
+  document.getElementById("pixelCounter").innerHTML = pixelsPerInch + " pixels";
+} //end growLine
+
+
+function shrinkLine(){
+ ctx.clearRect(0,0,canvas.width,canvas.height); //clear out the line so you can see it shrink, or the line stays persistant
+  pixelsPerInch -= 1;
+  ctx.strokeStyle = "Orange";
+  ctx.lineWidth = 5;
+  ctx.beginPath(); 
+  ctx.moveTo(0,0);
+  ctx.lineTo(pixelsPerInch,0);
+  ctx.stroke(); 
+  
+  document.getElementById("pixelCounter").innerHTML = pixelsPerInch;
+} //end shrinkLine
+
+
+function saveCalibration(){
+  
+
+ localStorage.setItem("savedPixelsPerInch", pixelsPerInch);
+ document.getElementById("calibrate_buttons").style.visibility = "hidden";
+ document.getElementById("inchTips").style.display = "none";
+ document.getElementById("pixelCounter").style.display = "none";
+ ctx.clearRect(0,0,canvas.width,canvas.height); //clear the orange line
+
+<!--REMOVE FOR ANDROID APP START -->
+ //save customer pixels per inch to a google analytics event
+        pixForGoog = parseInt(pixelsPerInch);
+        ga('send', 'event', 'customPixels', formFactor, completeDeviceName, pixForGoog);
+            //if above doesn't report out properly in google analytics then skip formFactor and stick to just device name and pixels
+<!--REMOVE FOR ANDROID APP END -->
+
+  selectServings();
+}
+
+function selectServings(){
+ //document.getElementById("subtitle").style.display = "none";  
+ document.getElementById("subtitle").setAttribute("class", "disappear");
+ document.getElementById("selectingTime").style.display = "block";
+ document.getElementById("first_section").innerHTML="Pick the number of servings and type of pasta below.";
+}
+
+
+//calculate radius
+function getPeopleNum() {
+  
+  //get all the selections
+  var peopleNumList = document.getElementById("numPeopleSelect");  //gets all the options of the list inclding the one selected
+  var peopleNum = parseFloat(peopleNumList.options[peopleNumList.selectedIndex].text);  
+  var pastaTypeList = document.getElementById("pastaType");
+  var pastaTypeSelected = pastaTypeList.options[pastaTypeList.selectedIndex].text;  
+  var mealTypeList = document.getElementById("mealType"); 
+  var mealTypeSelected = mealTypeList.options[mealTypeList.selectedIndex].text;
+  var numKidsList = document.getElementById("numKids");  
+  var numKidsSelected = numKidsList.options[numKidsList.selectedIndex].text;
+  var hungerLevelList = document.getElementById("hungerLevel");  
+  var hungerLevelSelected = hungerLevelList.options[hungerLevelList.selectedIndex].text;
+
+ 
+ //update the variable defaults based on selections
+  //adjust for pasta type
+  pastaSurfaceDensity = pastaSurfaceDensityDB[pastaTypeSelected];
+  //adjust for side dish vs. main course
+  if (mealTypeSelected == "Side Dish"){
+    servingSizeAdj = 0.5 * servingSize;
+  } else
+    servingSizeAdj = servingSize;
+  //adjust for kids
+  numKids =  numKidsDB[numKidsSelected];
+    //ignore extra kids if number of kids selected is > than number of people
+    if (numKids > peopleNum) 
+      {
+        numKids = peopleNum;
+        document.getElementById("kidsError").style.visibility = "visible";
+        document.getElementById("kidsError").innerHTML = "Error: Kids > People";
+      } else {
+        document.getElementById("kidsError").style.visibility = "hidden";
+      }
+  peopleNum = peopleNum - numKids*(1 - kidsPct); 
+  //hunger level
+  hungerLevelAdj = hungerLevelDB[hungerLevelSelected];
+  
+//calculate the radius and measure the size in inches for reference/trouble shooting
+  var radius = pixelsPerInch * Math.sqrt( ( (peopleNum * servingSizeAdj * hungerLevelAdj) / pastaSurfaceDensity)/Math.PI);
+  var radiusInches = Math.sqrt( ( (peopleNum * servingSizeAdj * hungerLevelAdj) / pastaSurfaceDensity)/Math.PI);
+
+  
+ 
+  //if the width is too big, set the canvas to smaller
+  if (ctx.canvas.width > currentWidth){
+    ctx.canvas.width = currentWidth - 20;
+  }
+  
+  //set the canvas height
+  ctx.canvas.height  = 2*radius + 70;
+  
+  //set the width to be at least 1 inch
+  if (2*radius < pixelsPerInch){
+     ctx.canvas.width  = pixelsPerInch;
+  } else
+    {
+      ctx.canvas.width  = 2*radius + 2;
+      //again, fix to width if too big
+        if (ctx.canvas.width > currentWidth){
+            ctx.canvas.width = currentWidth - 20;
+        }
+    }
+    
+    
+    
+ctx.clearRect(0,0,canvas.width,canvas.height);//clear the previous lines on the canvas
+ 
+ctx.beginPath();
+ctx.arc(canvas.width/2, canvas.height/2, radius, 0, 2 * Math.PI);
+//the two lines below work to fill the circle with blue
+  ctx.fillStyle = "#784212";
+  ctx.fill();
+
+/*pattern filling
+    //NOTE: moved images up to the variable section in the beginning to pre-load the images!
+    //var imageToFill = new Image();
+    //imageToFill.src = "patternTest.gif";
+    var pat=ctx.createPattern(imageToFill,"repeat");
+    ctx.fillStyle=pat;
+    ctx.fill();
+END PATTERN FILL */
+
+//text in the circle
+ctx.fillStyle = "white";
+ctx.textAlign = "center";
+ctx.shadowColor = "black";
+ctx.shadowOffsetX = 0; //1
+ctx.shadowOffsetY = 0; //1
+ctx.shadowBlur = 0; //3
+ctx.font = "14px Arial";
+ctx.fillText("put pasta here!",canvas.width/2, canvas.height/2);
+  
+/*FOR DEBUGGING - draw a 1 inch line for reference at bottom
+  //clear the text shadow
+  ctx.shadowColor = "black";
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 0;
+  ctx.shadowBlur = 0;
+  ctx.font = "10px Arial";
+ctx.beginPath();
+ctx.strokeStyle = "Orange";
+ctx.lineWidth = 5;
+ctx.moveTo(0,canvas.height);
+ctx.lineTo(pixelsPerInch,canvas.height);
+ctx.fillStyle = "Orange";
+ctx.textAlign = "left";
+ctx.fillText("1\" reference",0,canvas.height-10);
+ctx.stroke();
+*/
+
+//then, scroll to the canvas so the user sees the circle without having to scroll down
+document.getElementById("myCanvas").scrollIntoView({behavior: "smooth"});
+//set to page 2 so that if the serving size is updated, the page is redrawn
+page = 2;
+  
+//document.getElementById("test2").innerHTML = "DEBUG ->> Running " + deviceSimp + ", pasta " + pastaTypeSelected + " for " + peopleNum + " has a diameter of: " + 2*radiusInches.toFixed(2) + " inches and a radius of "+ Math.round(radius) + " pixels with a surface density of " + pastaSurfaceDensity + " for a " + mealTypeSelected + " including " + numKids + " children.  And you are " + hungerLevelSelected + hungerLevelAdj + " hunger level." + " canvas width "+ ctx.canvas.width + " window width " + window.innerWidth;
+
+}
+
+
+/* functions for hamburger naviation menu */
+
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+
+/* functions for serving size settings */
+
+  function calcOunces() {
+    servingSizeTemp = document.getElementById("settingsServing").value;
+    servingSizeOunces = Math.round( (servingSizeTemp/28.3495)*10 )/10;
+    document.getElementById("servingSizeOunces").innerHTML = servingSizeOunces;
+    if (servingSizeTemp < 0 || servingSizeTemp > 300) {
+       document.getElementById("settingsError").style.visibility = "visible";
+       document.getElementById("settingsError").innerHTML = "ERROR!  Serving size must be between 1 and 300 grams ";
+         document.getElementById("servingsSaveButton").style.visibility = "hidden";
+     } else {
+        document.getElementById("settingsError").style.visibility = "hidden";
+        document.getElementById("servingsSaveButton").style.visibility = "visible";
+     }
+  }
+
+  function saveServingSize(){
+    servingSize = document.getElementById("settingsServing").value;
+      if (servingSize > 0 && servingSize < 301) {
+        localStorage.setItem("savedServingSize", servingSize);
+        document.getElementById("settingsServing").value = servingSize; //update the input
+        document.getElementById('settingsModal').style.display='none';
+        if (page == 2)
+          getPeopleNum();
+      } else {
+        servingSize = 114; //if the value is too big or negative, return to default
+        localStorage.setItem("savedServingSize", servingSize);
+      }
+     }
+
+  function kidsServingSize(){
+    kidsPct = (document.getElementById("settingsKids").value / 100);
+      if (kidsPct > .01 && kidsPct < 1) {
+        localStorage.setItem("savedKidsServingSize", kidsPct);
+        document.getElementById("settingsKids").value = kidsPct * 100; //update the input
+        document.getElementById('settingsModal').style.display='none';
+      } else {
+        kidsPct = .75; //if the value is too big or negative, return to default
+        localStorage.setItem("savedKidsServingSize", kidsPct);
+      }
+     }
+
+</script>
+</body>
+</html>
